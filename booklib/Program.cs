@@ -1,3 +1,6 @@
+using booklib.Entities;
+using Microsoft.EntityFrameworkCore;
+
 namespace booklib
 {
     public class Program
@@ -9,6 +12,10 @@ namespace booklib
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            builder.Services.AddDbContext<DatabaseContext>(opts =>
+            {
+                opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));                
+            });
 
             var app = builder.Build();
 
