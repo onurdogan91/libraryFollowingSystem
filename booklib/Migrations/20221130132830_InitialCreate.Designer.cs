@@ -12,7 +12,7 @@ using booklib.Entities;
 namespace booklib.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20221129170641_InitialCreate")]
+    [Migration("20221130132830_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,14 +26,31 @@ namespace booklib.Migrations
 
             modelBuilder.Entity("booklib.Entities.Book", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("BookId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("AddBookDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BookImageFileName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
                     b.Property<string>("BookName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BookSubject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BookType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -43,15 +60,7 @@ namespace booklib.Migrations
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Writer")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
+                    b.HasKey("BookId");
 
                     b.ToTable("Books");
                 });
@@ -72,12 +81,14 @@ namespace booklib.Migrations
 
                     b.HasKey("BookId", "UserId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("Libs");
                 });
 
             modelBuilder.Entity("booklib.Entities.User", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -87,6 +98,9 @@ namespace booklib.Migrations
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Locked")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -94,6 +108,12 @@ namespace booklib.Migrations
 
                     b.Property<bool>("Penalty")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Readed")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReadingNow")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Role")
                         .IsRequired()
@@ -104,9 +124,28 @@ namespace booklib.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("booklib.Entities.Lib", b =>
+                {
+                    b.HasOne("booklib.Entities.Book", "Book")
+                        .WithMany()
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("booklib.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

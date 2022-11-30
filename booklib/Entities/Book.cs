@@ -7,7 +7,7 @@ namespace booklib.Entities
     public class Book
     {
         [Key]
-        public Guid Id { get; set; }
+        public Guid BookId { get; set; }
 
         [Required(ErrorMessage = "Kitap Adı zorunludur.")]
         public string BookName { get; set; }
@@ -32,6 +32,8 @@ namespace booklib.Entities
         public string BookImageFileName { get; set; }
 
         public DateTime AddBookDate { get; set; } = DateTime.Now;
-        
+        //public ICollection<Lib> Libs { get; set; }
+
+
     }
 }

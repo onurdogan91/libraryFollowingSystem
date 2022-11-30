@@ -6,10 +6,7 @@ namespace booklib.Entities
     {
         public DatabaseContext(DbContextOptions options) : base(options)
         {
-        }
-        //public DatabaseContext() { }
-
-      
+        }        
         public DbSet<Book> Books { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Lib> Libs { get; set; }

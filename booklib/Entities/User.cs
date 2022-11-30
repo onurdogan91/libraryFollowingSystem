@@ -7,7 +7,7 @@ namespace booklib.Entities
     public class User
     {
         [Key]
-        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
 
         [Required(ErrorMessage ="Lütfen Kullanıcı Adınızı Belirleyiniz.")]
         [StringLength(20,ErrorMessage ="Kullanıcı adı en fazla 20 karakterli olabilir.")]
@@ -20,6 +20,8 @@ namespace booklib.Entities
         [MinLength(6, ErrorMessage = "Şifre için en az 6 karakter kullaınabilir.")]
         public string Password { get; set; }
 
+        public string ProfileImageFileName { get; set; }
+
         public string Role { get; set; } = "user";
 
         public string? Readed { get; set; }
@@ -31,5 +33,7 @@ namespace booklib.Entities
         public bool Penalty { get; set; } = false;
 
         public bool Locked { get; set; } = false;
+
+        //public ICollection<Lib>Libs { get; set; }
     }
 }
