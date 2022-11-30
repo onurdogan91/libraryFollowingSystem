@@ -9,22 +9,29 @@ namespace booklib.Entities
         [Key]
         public Guid Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Kitap Adı zorunludur.")]
         public string BookName { get; set; }
 
-        [Required]
-        public string Type { get; set; }
+        [Required(ErrorMessage = "Kitap Türü zorunludur.")]
+        public string BookType { get; set; }
 
-        [Required]
-        public string Writer { get; set; }
+        [Required(ErrorMessage = "Yazar Bilgisi zorunludur.")]
+        public string Author { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Konu zorunludur.")]
+        public string BookSubject { get; set; }
+
+        [Required(ErrorMessage = "Stok bilgisi zorunludur.")]
         public int Stock { get; set; }
 
         [Required]
         public DateTime PublishingDate { get; set; }
 
+        [Required]
+        [StringLength(255)]
+        public string BookImageFileName { get; set; }
+
         public DateTime AddBookDate { get; set; } = DateTime.Now;
-        //public bool Check { get; set; } = true; stok durumuna göre front-end de durum ekleriz
+        
     }
 }
