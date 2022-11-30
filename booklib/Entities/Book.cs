@@ -27,9 +27,9 @@ namespace booklib.Entities
         [Required]
         public DateTime PublishingDate { get; set; }
 
-        [Required]
+        
         [StringLength(255)]
-        public string BookImageFileName { get; set; }
+        public string? BookImageFileName { get; set; }
 
         public DateTime AddBookDate { get; set; } = DateTime.Now;
         //public ICollection<Lib> Libs { get; set; }

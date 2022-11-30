@@ -16,7 +16,7 @@ namespace booklib.Models
 
         public int Stock { get; set; }
 
-        public string BookImageFileName { get; set; }
+        public string? BookImageFileName { get; set; }
 
         public DateTime PublishingDate { get; set; }
     }

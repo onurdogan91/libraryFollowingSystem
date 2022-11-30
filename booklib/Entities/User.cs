@@ -20,7 +20,7 @@ namespace booklib.Entities
         [MinLength(6, ErrorMessage = "Şifre için en az 6 karakter kullaınabilir.")]
         public string Password { get; set; }
 
-        public string ProfileImageFileName { get; set; }
+        public string? ProfileImageFileName { get; set; }
 
         public string Role { get; set; } = "user";
 

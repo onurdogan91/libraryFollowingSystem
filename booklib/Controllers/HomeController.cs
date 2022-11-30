@@ -1,4 +1,5 @@
 ﻿using booklib.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -18,6 +19,7 @@ namespace booklib.Controllers
             return View();
         }
 
+        [Authorize(Roles = "user")]
         public IActionResult Privacy()
         {
             return View();
