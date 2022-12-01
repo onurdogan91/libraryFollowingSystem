@@ -2,9 +2,11 @@
 using booklib.Entities;
 using booklib.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Operations;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Security.Claims;
+
 
 namespace booklib.Controllers
 {
@@ -12,11 +14,13 @@ namespace booklib.Controllers
     {
         private readonly DatabaseContext _databaseContext;
         private readonly IConfiguration _configuration;
+        private readonly IMapper _mapper;
 
-        public ModeratorController(DatabaseContext databaseContext, IConfiguration configuration)
+        public ModeratorController(DatabaseContext databaseContext, IConfiguration configuration, IMapper mapper)
         {
             _databaseContext = databaseContext;
             _configuration = configuration;
+            _mapper = mapper;
         }
 
         public IActionResult Index()
@@ -34,7 +38,7 @@ namespace booklib.Controllers
                     return View(model);
                 }
                 Book book = new Book()
-                {
+                {                    
                     BookName = model.BookName,
                     Author = model.Author,
                     BookType = model.BookType,
@@ -43,8 +47,8 @@ namespace booklib.Controllers
                     PublishingDate = model.PublishingDate,
                     Stock = model.Stock
                 };
-
-                string fileName = $"p_{book.BookName}.jpg";
+                       
+                string fileName = $"p_{book.BookName}{book.Author}.jpg";
 
                 Stream stream = new FileStream($"wwwroot/uploads/{fileName}", FileMode.OpenOrCreate);
 
@@ -67,31 +71,32 @@ namespace booklib.Controllers
             }
             return View(model);
         }
+     public IActionResult EditBook(Guid id)
+        {
+            Book book = _databaseContext.Books.Find(id); BookModel model = _mapper.Map<BookModel>(book);
+            return View(model);
+        }
 
-        //[HttpPost]
-        //public IActionResult BookImage([Required] IFormFile file)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        Guid bookid = new Guid(Book.FindFirstValue(ClaimTypes.NameIdentifier));
-        //        Book book = _databaseContext.Books.SingleOrDefault(x => x.BookId == bookid);
+        [HttpPost]
+        public IActionResult EditBook(Guid id, BookModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Book book = _databaseContext.Books.Find(id);
+                _mapper.Map(model, book);
+                _databaseContext.SaveChanges();
+                return RedirectToAction(nameof(BookList));
+            }
+            return View();
+        }
 
-        //        string fileName = $"p_{bookid}.jpg";
+        public IActionResult BookList(BookModel model)
+        {            
+                List<BookModel> books =
+                    _databaseContext.Books.ToList().Select(x => _mapper.Map<BookModel>(x)).ToList();                    
 
-        //        Stream stream = new FileStream($"wwwroot/uploads/{fileName}", FileMode.OpenOrCreate);
+                return View(books);
 
-        //        file.CopyTo(stream);
-        //        stream.Close();
-        //        stream.Dispose();
-
-        //        book.BookImageFileName = fileName;
-        //        _databaseContext.SaveChanges();
-
-        //        return RedirectToAction(nameof(Index));
-
-
-        //    }
-        //    return View(nameof(Index));
-        //}
+        }
     }
 }

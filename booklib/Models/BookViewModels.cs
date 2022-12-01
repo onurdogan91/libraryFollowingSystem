@@ -4,7 +4,7 @@ namespace booklib.Models
 {
     public class BookModel
     {
-        public Guid Id { get; set; }
+        public Guid BookId { get; set; }
 
         public string BookName { get; set; }
 

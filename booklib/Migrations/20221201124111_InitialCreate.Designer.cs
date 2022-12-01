@@ -12,7 +12,7 @@ using booklib.Entities;
 namespace booklib.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20221130232831_InitialCreate")]
+    [Migration("20221201124111_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
