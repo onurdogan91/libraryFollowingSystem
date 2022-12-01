@@ -20,7 +20,7 @@ namespace booklib.Migrations
                     BookSubject = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Stock = table.Column<int>(type: "int", nullable: false),
                     PublishingDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    BookImageFileName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    BookImageFileName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     AddBookDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -36,6 +36,7 @@ namespace booklib.Migrations
                     UserName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    ProfileImageFileName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Readed = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ReadingNow = table.Column<string>(type: "nvarchar(max)", nullable: true),

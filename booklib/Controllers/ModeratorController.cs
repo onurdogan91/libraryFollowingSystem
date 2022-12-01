@@ -1,6 +1,10 @@
-﻿using booklib.Entities;
+﻿using AutoMapper;
+using booklib.Entities;
 using booklib.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+using System.Net;
+using System.Security.Claims;
 
 namespace booklib.Controllers
 {
@@ -20,7 +24,7 @@ namespace booklib.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Index(BookModel model)
+        public IActionResult Index(BookModel model, IFormFile file)
         {
             if (ModelState.IsValid)
             {
@@ -34,11 +38,21 @@ namespace booklib.Controllers
                     BookName = model.BookName,
                     Author = model.Author,
                     BookType = model.BookType,
-                    //BookImageFileName = model.BookImageFileName,
+                    BookImageFileName = model.BookImageFileName,
                     BookSubject = model.BookSubject,
                     PublishingDate = model.PublishingDate,
                     Stock = model.Stock
                 };
+
+                string fileName = $"p_{book.BookName}.jpg";
+
+                Stream stream = new FileStream($"wwwroot/uploads/{fileName}", FileMode.OpenOrCreate);
+
+                file.CopyTo(stream);
+                stream.Close();
+                stream.Dispose();
+                book.BookImageFileName = fileName;
+
                 _databaseContext.Books.Add(book);
                 int affectedRowCount = _databaseContext.SaveChanges();
 
@@ -53,5 +67,31 @@ namespace booklib.Controllers
             }
             return View(model);
         }
+
+        //[HttpPost]
+        //public IActionResult BookImage([Required] IFormFile file)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        Guid bookid = new Guid(Book.FindFirstValue(ClaimTypes.NameIdentifier));
+        //        Book book = _databaseContext.Books.SingleOrDefault(x => x.BookId == bookid);
+
+        //        string fileName = $"p_{bookid}.jpg";
+
+        //        Stream stream = new FileStream($"wwwroot/uploads/{fileName}", FileMode.OpenOrCreate);
+
+        //        file.CopyTo(stream);
+        //        stream.Close();
+        //        stream.Dispose();
+
+        //        book.BookImageFileName = fileName;
+        //        _databaseContext.SaveChanges();
+
+        //        return RedirectToAction(nameof(Index));
+
+
+        //    }
+        //    return View(nameof(Index));
+        //}
     }
 }

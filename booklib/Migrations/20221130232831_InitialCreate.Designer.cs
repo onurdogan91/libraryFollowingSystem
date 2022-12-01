@@ -12,8 +12,8 @@ using booklib.Entities;
 namespace booklib.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20221130143324_UserDbUpdate")]
-    partial class UserDbUpdate
+    [Migration("20221130232831_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,7 +38,6 @@ namespace booklib.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BookImageFileName")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
