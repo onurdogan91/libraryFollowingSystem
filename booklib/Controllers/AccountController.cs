@@ -14,6 +14,7 @@ namespace booklib.Controllers
         private readonly DatabaseContext _databaseContext;
         private readonly IConfiguration _configuration;
 
+
         public AccountController(DatabaseContext databaseContext, IConfiguration configuration)
         {
             _databaseContext = databaseContext;
@@ -24,8 +25,8 @@ namespace booklib.Controllers
         {
             return View();
         }
-        [HttpPost]
 
+        [HttpPost]
         public IActionResult Register(UserRegisterViewModel model)
         {
             if (ModelState.IsValid)
@@ -52,9 +53,9 @@ namespace booklib.Controllers
                     return RedirectToAction(nameof(Login));
                 }
             }
-            return View(model);
-            
+            return View(model);            
         }
+
         public IActionResult Login()
         {
             return View();
@@ -93,25 +94,25 @@ namespace booklib.Controllers
                 {
                     ModelState.AddModelError("", "Kullanıcı adı ve ya şifre hatalı!!!");
                 }
-
             }
             return View(model);
-
         }
+
         public IActionResult Profile()
         {
             return View();
         }
+
         [HttpPost]
         public IActionResult Profile(UserModel model)
         {
             return View();
         }
 
-        public IActionResult BookList()
-        {
-            return View();
-        }
+        //public IActionResult BookList()
+        //{
+        //    return View();
+        //}
 
         public IActionResult Logout()
         {

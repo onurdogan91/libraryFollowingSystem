@@ -40,6 +40,8 @@ namespace booklib.Models
 
     public class BookEditModel
     {
+        public Guid BookId { get; set; }
+
         public string BookName { get; set; }
 
         public string BookType { get; set; }
@@ -49,7 +51,6 @@ namespace booklib.Models
         public string Author { get; set; }
 
         public int Stock { get; set; }
-
         public string BookImageFileName { get; set; }
 
         public DateTime PublishingDate { get; set; }

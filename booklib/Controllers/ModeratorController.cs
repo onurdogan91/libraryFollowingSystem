@@ -29,6 +29,7 @@ namespace booklib.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public IActionResult Index(BookModel model, IFormFile file)
         {
@@ -73,12 +74,13 @@ namespace booklib.Controllers
             }
             return View(model);
         }
-     public IActionResult EditBook(Guid id)
-        {
-            Book book = _databaseContext.Books.Find(id);
-            BookModel model = _mapper.Map<BookModel>(book);
-            return View(model);
-        }
+
+        public IActionResult EditBook(Guid id)
+            {
+                Book book = _databaseContext.Books.Find(id);
+                BookModel model = _mapper.Map<BookModel>(book);
+                return View(model);
+            }
 
         [HttpPost]
         public IActionResult EditBook(Guid id, BookModel model)
@@ -99,7 +101,6 @@ namespace booklib.Controllers
                     _databaseContext.Books.ToList().Select(x => _mapper.Map<BookModel>(x)).ToList();                    
 
                 return View(books);
-
         }
 
       

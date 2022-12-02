@@ -26,15 +26,10 @@ namespace booklib.Entities
 
         [Required]
         public DateTime PublishingDate { get; set; }
-
         
         [StringLength(255)]
         public string? BookImageFileName { get; set; } = "No-Image.jpg";
 
         public DateTime AddBookDate { get; set; } = DateTime.Now;
-
-                //public ICollection<Lib> Libs { get; set; }
-
-
     }
 }

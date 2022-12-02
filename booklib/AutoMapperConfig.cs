@@ -12,6 +12,7 @@ namespace bookLib
             CreateMap<User, CreateUserModel>().ReverseMap();
             CreateMap<User, EditUserModel>().ReverseMap();
             CreateMap<Book, BookModel>().ReverseMap();
+            CreateMap<Book, BookEditModel>().ReverseMap();
         }
     }
 }
