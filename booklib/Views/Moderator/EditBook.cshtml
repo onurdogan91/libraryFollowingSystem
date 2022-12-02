@@ -1,6 +1,5 @@
 ﻿@model BookModel
 @{
-    
     ViewData["Title"] = "Kitap Düzenle";
 }
 
@@ -15,63 +14,73 @@
         <h2>Kitap Bilgileri</h2>
         <hr />
     </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="mb-4">
+                <div asp-validation-summary="All" class="text-danger small"></div>
+            </div>
+        </div>
+    </div>
     
     <form method="post" asp-action="EditBook" enctype="multipart/form-data">
   
         <div class="text-center mb-3">
-            <img src="~/uploads/@book.BookImageFileName" width="128" class="img-thumbnail" />
+            <img src="~/uploads/@Model.BookImageFileName" width="128" class="img-thumbnail" />
         </div>
-        <div class="form-group mb-3">
+        @*<div class="form-group mb-3">
             <label class="form-label small">Kitap Kapağı<span class="badge bg-danger ms-2">zorunlu</span></label>
-            <input type="file" name="file" class="form-control" accept=".jpg" />
+            <input type="file" value="@Model.BookImageFileName" name="file" class="form-control" accept=".jpg" />
             <div class="text-secondary">
                 <span class="small">
                     <i class="fa fa-info-circle me-2"></i>Sadece jpg formatında
                 </span>
             </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
             <label class="form-label small">Kitap Adı<span class="badge bg-danger ms-2">zorunlu</span></label>
             <div class="input-group mb-3">
-                <input name="bookname" value="@book.BookName" type="text" class="form-control" />
+                <input name="bookname" value="@Model.BookName" type="text" class="form-control" />
             </div>
         </div>
 
         <div class="form-group">
             <label class="form-label small">Yazar<span class="badge bg-danger ms-2">zorunlu</span></label>
             <div class="input-group mb-3">
-                <input name="author" type="text" class="form-control" />
+                <input name="author" value="@Model.Author" type="text" class="form-control" />
             </div>
         </div>
 
         <div class="form-group">
             <label class="form-label small">Türü<span class="badge bg-danger ms-2">zorunlu</span></label>
             <div class="input-group mb-3">
-                <input name="booktype" type="text" class="form-control" />
+                <input name="booktype" value="@Model.BookType" type="text" class="form-control" />
             </div>
         </div>
 
         <div class="form-group">
             <label class="form-label small">Özet<span class="badge bg-danger ms-2">zorunlu</span></label>
             <div class="input-group mb-3">
-                <input name="booksubject" type="text" class="form-control" />
+                <input name="booksubject" value="@Model.BookSubject" type="text" class="form-control" />
             </div>
         </div>
 
         <div class="form-group">
             <label class="form-label small">Stok<span class="badge bg-danger ms-2">zorunlu</span></label>
             <div class="input-group mb-3">
-                <input name="stock" type="number" class="form-control" />
+                <input name="stock" value="@Model.Stock" type="number" class="form-control" />
             </div>
         </div>
 
         <div class="form-group">
             <label class="form-label small">Yayın Tarihi<span class="badge bg-danger ms-2">zorunlu</span></label>
             <div class="input-group mb-3">
-                <input name="publishingdate" type="date" class="form-control" />
+                <input name="publishingdate" value="@Model.PublishingDate" type="date" class="form-control" />
             </div>
         </div>
+
+        <input type="hidden" asp-for="@Model.BookId" />
 
         <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-floppy-disk me-2"></i>Kaydet</button>
 

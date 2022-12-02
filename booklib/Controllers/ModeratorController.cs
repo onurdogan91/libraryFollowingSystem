@@ -6,6 +6,8 @@ using Microsoft.CodeAnalysis.Operations;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 
 namespace booklib.Controllers
@@ -73,7 +75,8 @@ namespace booklib.Controllers
         }
      public IActionResult EditBook(Guid id)
         {
-            Book book = _databaseContext.Books.Find(id); BookModel model = _mapper.Map<BookModel>(book);
+            Book book = _databaseContext.Books.Find(id);
+            BookModel model = _mapper.Map<BookModel>(book);
             return View(model);
         }
 
@@ -87,7 +90,7 @@ namespace booklib.Controllers
                 _databaseContext.SaveChanges();
                 return RedirectToAction(nameof(BookList));
             }
-            return View();
+            return View(model);
         }
 
         public IActionResult BookList(BookModel model)
@@ -98,5 +101,7 @@ namespace booklib.Controllers
                 return View(books);
 
         }
+
+      
     }
 }

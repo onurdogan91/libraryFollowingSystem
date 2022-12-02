@@ -30,8 +30,8 @@
             <tbody>
                 @foreach(BookModel book in Model){
                 <tr>
-                        <td><img width="128px" src=/uploads/@book.BookImageFileName /></td>
-                    <td>@book.BookName</td>
+                        <td><img width="128px" src=~/uploads/@book.BookImageFileName/></td>
+                        <td>@book.BookName</td>
                         <td>@book.Author</td>
                         <td>@book.BookType</td>
                         <td>@book.PublishingDate</td>
