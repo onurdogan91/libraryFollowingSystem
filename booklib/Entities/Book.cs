@@ -5,7 +5,8 @@ namespace booklib.Entities
 {
     [Table("Books")]
     public class Book
-    {
+    {      
+
         [Key]
         public Guid BookId { get; set; }
 

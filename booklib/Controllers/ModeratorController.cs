@@ -78,7 +78,7 @@ namespace booklib.Controllers
         public IActionResult EditBook(Guid id)
             {
                 Book book = _databaseContext.Books.Find(id);
-                BookModel model = _mapper.Map<BookModel>(book);
+                BookEditModel model = _mapper.Map<BookEditModel>(book);
                 return View(model);
             }
 
@@ -88,6 +88,8 @@ namespace booklib.Controllers
             if (ModelState.IsValid)
             {
                 Book book = _databaseContext.Books.Find(id);
+                model.BookImageFileName = book.BookImageFileName;
+                model.PublishingDate = book.PublishingDate;
                 _mapper.Map(model, book);
                 _databaseContext.SaveChanges();
                 return RedirectToAction(nameof(BookList));
