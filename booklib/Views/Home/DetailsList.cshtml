@@ -1,0 +1,53 @@
+﻿@model List<BookModel>
+@{
+    ViewData["Title"] = "Kitap Detayları";
+}
+
+
+    <div class="row">
+        <div class="col">
+            <h1 class="display-4 border-bottom text-center pb-2">@ViewData["Title"]</h1>
+        </div>
+    </div>
+
+    <div class="col">
+        <div>
+            <h2>Kitap Bilgileri</h2>
+            <hr />
+        </div>
+    </div>
+
+<div class="row">
+    <div class="col">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Kitap Kapağı</th>
+                    <th scope="col">Kitap Adı</th>
+                    <th scope="col">Yazarı</th>
+                    <th scope="col">Türü</th>
+                    <th scope="col">Yayım Tarihi</th>
+                    <th scope="col">Özet</th>
+                    <th scope="col">Stok</th>
+                    <th scope="col">Düzenle</th>
+                    <th scope="col">Sil</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (BookModel book in Model)
+                {
+                    <tr>
+                        <td><img width="128px" src=~/uploads/@book.BookImageFileName /></td>
+                        <td>@book.BookName</td>
+                        <td>@book.Author</td>
+                        <td>@book.BookType</td>
+                        <td>@book.PublishingDate</td>                        
+                        <td>@book.BookSubject</td>
+                        <td>@book.Stock</td>                        
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

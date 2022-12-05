@@ -1,4 +1,5 @@
-﻿using booklib.Entities;
+﻿using AutoMapper;
+using booklib.Entities;
 using booklib.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,13 +9,20 @@ namespace booklib.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         
+        private readonly DatabaseContext _databaseContext;
+        private readonly IConfiguration _configuration;
+        private readonly IMapper _mapper;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(DatabaseContext databaseContext, IConfiguration configuration, IMapper mapper)
         {
-            _logger = logger;
+            _databaseContext = databaseContext;
+            _configuration = configuration;
+            _mapper = mapper;
         }
+
+
+        
         public IActionResult Index()
         {
             return View();
@@ -32,11 +40,13 @@ namespace booklib.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-        public IActionResult DetailsPage()
+        public IActionResult DetailsList(BookModel model)
         {
 
-            return View();
+            List<BookModel> books=_databaseContext.Books.ToList().Select(x=>_mapper.Map<BookModel>(x)).ToList();
+
+            return View(model);
+
         }
     }
 }
