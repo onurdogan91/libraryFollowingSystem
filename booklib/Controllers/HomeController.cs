@@ -3,6 +3,7 @@ using booklib.Entities;
 using booklib.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace booklib.Controllers
@@ -45,8 +46,32 @@ namespace booklib.Controllers
 
             List<BookModel> books=_databaseContext.Books.ToList().Select(x=>_mapper.Map<BookModel>(x)).ToList();
 
-            return View(model);
+            return View(books);
 
         }
+        
+        public IActionResult BookDetails(Guid id, BookModel model)
+        {
+            Book book = _databaseContext.Books.Find(id);
+            model.BookImageFileName = book.BookImageFileName;
+            _mapper.Map(model, book);
+            return View(book);
+        }
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var movie = await _databaseContext.Books
+        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //    if (movie == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(movie);
+        //}
     }
 }
