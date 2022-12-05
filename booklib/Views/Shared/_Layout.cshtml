@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - booklib</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link href="~/toastrjs/toastr.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/booklib.styles.css" asp-append-version="true" />
 </head>
@@ -27,6 +28,9 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Hakkımızda</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Hakkımızda</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">İletişim</a>
                         </li>
                         @if (User.Identity.IsAuthenticated)
@@ -35,7 +39,7 @@
                             {
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" asp-action="Index" asp-controller="Moderator" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Administrator
+                                        Moderator
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li><a asp-action="Index" asp-controller="Moderator" class="dropdown-item">Kitap Ekle</a></li>
@@ -85,6 +89,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/toastrjs/toastr.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

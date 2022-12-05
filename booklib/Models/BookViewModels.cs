@@ -19,6 +19,8 @@ namespace booklib.Models
         public string? BookImageFileName { get; set; }
 
         public DateTime PublishingDate { get; set; }
+
+        public string? Done { get; set; }
     }
 
     public class BookCreateModel

@@ -49,6 +49,7 @@ namespace booklib.Controllers
                     BookSubject = model.BookSubject,
                     PublishingDate = model.PublishingDate,
                     Stock = model.Stock
+
                 };
                        
                 string fileName = $"p_{book.BookName}{book.Author}.jpg";
@@ -60,8 +61,11 @@ namespace booklib.Controllers
                 stream.Dispose();
                 book.BookImageFileName = fileName;
 
-                _databaseContext.Books.Add(book);
+                _databaseContext.Books.Add(book);              
                 int affectedRowCount = _databaseContext.SaveChanges();
+                ViewData["Result"] = "Ok";
+
+                
 
                 if (affectedRowCount == 0)
                 {
@@ -69,10 +73,14 @@ namespace booklib.Controllers
                 }
                 else
                 {
+                    
                     return RedirectToAction(nameof(Index));
                 }
+
+                
+
             }
-            return View(model);
+            return View("Index");
         }
 
         public IActionResult EditBook(Guid id)
@@ -103,6 +111,19 @@ namespace booklib.Controllers
                     _databaseContext.Books.ToList().Select(x => _mapper.Map<BookModel>(x)).ToList();                    
 
                 return View(books);
+        }
+
+        public IActionResult DeleteBook(Guid id)
+        {
+            Book book = _databaseContext.Books.Find(id);
+
+            if(book != null)
+            {
+                _databaseContext.Books.Remove(book);
+                _databaseContext.SaveChanges();
+            }
+
+            return RedirectToAction(nameof(BookList));
         }
 
       

@@ -23,7 +23,7 @@ namespace booklib
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(opts =>
             {
                 opts.Cookie.Name = ".bookLib.auth";
-                opts.ExpireTimeSpan = TimeSpan.FromDays(7);
+                opts.ExpireTimeSpan = TimeSpan.FromDays(7);                
                 opts.LoginPath = "/Account/Login";
                 opts.LogoutPath = "/Account/Logout";
                 opts.AccessDeniedPath = "/Home/AccessDenied";
