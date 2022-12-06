@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using booklib.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace booklib.Models
 {
@@ -20,9 +21,7 @@ namespace booklib.Models
 
         public DateTime PublishingDate { get; set; }
 
-        public string? Done { get; set; }
-
-        
+        public string? Done { get; set; }        
     }
 
     public class BookCreateModel
@@ -58,6 +57,6 @@ namespace booklib.Models
         public string BookImageFileName { get; set; }
 
         public DateTime PublishingDate { get; set; }
-    }
+    }   
 
 }
