@@ -53,25 +53,10 @@ namespace booklib.Controllers
         public IActionResult BookDetails(Guid id, BookModel model)
         {
             Book book = _databaseContext.Books.Find(id);
-            model.BookImageFileName = book.BookImageFileName;
-            _mapper.Map(model, book);
-            return View(book);
+            //model.BookImageFileName = book.BookImageFileName;
+            _mapper.Map(book, model);
+            return View(model);
         }
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var movie = await _databaseContext.Books
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (movie == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(movie);
-        //}
+        
     }
 }
