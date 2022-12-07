@@ -24,21 +24,14 @@ namespace booklib.Models
         public string? Done { get; set; }        
     }
 
-    public class BookCreateModel
+    public class BookSearchModel
     {
         public string BookName { get; set; }
 
-        public string BookType { get; set; }
-
-        public string BookSubject { get; set; }
-
         public string Author { get; set; }
-
-        public int Stock { get; set; }
 
         public string BookImageFileName { get; set; }
 
-        public DateTime PublishingDate { get; set; }
     }
 
     public class BookEditModel

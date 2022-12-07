@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Diagnostics;
 using System.Linq;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace booklib.Controllers
 {
@@ -25,12 +26,28 @@ namespace booklib.Controllers
             _mapper = mapper;
         }
 
-        public IActionResult Index(BookModel model)
+        public List<BookSearchModel> GetBooks()
         {
-            List<BookModel> books = _databaseContext.Books.ToList().Select(x => _mapper.Map<BookModel>(x)).ToList();
+            List<BookSearchModel> book = _databaseContext.Books.ToList().Select(x => _mapper.Map<BookSearchModel>(x)).ToList();
 
-            return View(books);
-        }     
+            return book;
+
+        }
+        public IActionResult Index()
+        {
+           List<BookSearchModel> model=GetBooks();
+
+            return View(model);
+        }
+
+       
+       
+        public PartialViewResult SearchBooks(string searchText)
+        {
+            List<BookSearchModel> model = GetBooks();
+            var result = model.Where(a => a.BookName.ToLower().Contains(searchText) || a.Author.ToLower().Contains(searchText)).ToList();
+            return PartialView("_PartialGridView", result);
+        }
 
         [Authorize(Roles = "user, admin, moderator")]
         public IActionResult Privacy()

@@ -1,0 +1,148 @@
+﻿@model List<BookModel>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Hoşgeldiniz...</h1>
+</div>
+
+<div class="text-center">
+    <p>Çevrimiçi Kütüphanemizi Kullanarak Aradığınız Kitaplara Kolayca Ulaşabilirsiniz.</p>
+</div>
+
+<div class="row">
+    <div class="col">
+        <p>İstediğiniz kitapları aratabilir ve müsaitlik durumuna göre kitaba sahip olabilirsiniz</p>
+    </div>
+</div>
+
+@*<div>
+    <form class="d-flex" asp-controller="Home" asp-action="Index" method="get">
+        <input class="form-control me-2" type="text" asp-for="SearchString" name="SearchString">
+        <input type="text" id="myInput" onkeyup="myFunction()"  placeholder="Search for names..">
+        <button class="btn btn-outline-dark" type="submit">Search</button>
+    </form>
+</div>*@
+
+
+@*    <ul id="myUL">
+        <li><a href=home\BookDetails>
+            @Html.GenerateIdFromName("BookName")</a></li>        
+    </ul>*@
+    
+
+
+
+<div class="row" id="myDIV">
+    <div class="col">
+       @* <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Kitap Kapağı</th>
+                    <th scope="col">Kitap Adı</th>
+                    <th scope="col">Yazarı</th>
+                    <th scope="col">Türü</th>
+                    <th scope="col">Yayım Tarihi</th>
+                    <th scope="col">Özet</th>
+                    <th scope="col">Stok</th>
+                    <th scope="col">Detaya Git</th>
+
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (BookModel item in Model)
+                {
+                    <tr>
+                        <td><img width="128px" src=~/uploads/@item.BookImageFileName /></td>
+                        <td>@item.BookName</td>
+                        <td>@item.Author</td>
+                        <td>@book.BookType</td>
+                    <td>@book.PublishingDate</td>
+                    <td>@book.BookSubject</td>
+                    <td>@book.Stock</td>
+                        <td>
+                            <a asp-action="BookDetails" asp-route-id="@item.BookId" class="btn btn-info btn-sm text-white"><i class="fa fa-edit me-2"></i>Detay</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>*@
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Kitap Kapağı</th>
+                    <th scope="col">Kitap Adı</th>
+                    <th scope="col">Yazarı</th>
+                    <th scope="col">Detaya Git</th>
+                </tr>
+            </thead>
+            <tbody>
+                <input type="text" id="searchbox" onkeyup="myFunction()" placeholder="Search for names..">
+        @foreach(BookModel item in Model){
+            @*<ul id="myUL">
+                <li><a asp-action="BookDetails" asp-route-id="@item.BookId">@item.BookName,@item.Author</a></li>
+                
+                <li><a asp-action="BookDetails" asp-route-id="@item.BookId">detay</a></li>
+        </ul>*@
+
+                    <tr id="cards" class="cards">
+                        <td><a href="#"><img width="128px" src=~/uploads/@item.BookImageFileName /></a></td>
+                        <td><a href="#">@item.BookName</a></td>
+                        <td><a href="#">@item.Author</a></td>
+                <td>
+                    <a asp-action="BookDetails" asp-route-id="@item.BookId" class="btn btn-info btn-sm text-white"><i class="fa fa-edit me-2"></i>Detay</a>
+                </td>
+            </tr>
+
+        }
+            </tbody>
+        </table>
+       
+    </div>
+</div>
+
+@*<script>
+    function myFunction() {
+        // Declare variables
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById('myInput');
+        filter = input.value.toUpperCase();
+        ul = document.getElementById("myUL");
+        li = ul.getElementsByTagName('td');
+
+        // Loop through all list items, and hide those who don't match the search query
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("a")[0];
+            txtValue = a.textContent || a.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+            } else {
+                li[i].style.display = "none";
+            }
+        }
+    }
+</script>*@
+
+<script>
+    function liveSearch() {
+        // Locate the card elements
+        let cards = document.getElementById("cards")
+        // Locate the search input
+        let search_query = document.getElementById("searchbox").value;
+        // Loop through the cards
+        for (var i = 0; i < cards.length; i++) {
+            // If the text is within the card...
+            if (cards[i].innerText.toLowerCase()
+                // ...and the text matches the search query...
+                .includes(search_query.toLowerCase())) {
+                // ...remove the `.is-hidden` class.
+                cards[i].classList.remove("is-hidden");
+            } else {
+                // Otherwise, add the class.
+                cards[i].classList.add("is-hidden");
+            }
+        }
+    }
+</script>

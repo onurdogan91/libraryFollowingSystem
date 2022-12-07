@@ -9,6 +9,10 @@
     {
       "library": "toastr.js@2.1.4",
       "destination": "wwwroot/toastr.js/"
+    },
+    {
+      "library": "jquery-ajaxy@1.6.1",
+      "destination": "wwwroot/lib/jquery-ajaxy/"
     }
   ]
 }
