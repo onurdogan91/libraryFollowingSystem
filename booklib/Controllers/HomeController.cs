@@ -18,29 +18,43 @@ namespace booklib.Controllers
         private readonly DatabaseContext _databaseContext;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
-
         public HomeController(DatabaseContext databaseContext, IConfiguration configuration, IMapper mapper)
-        {
-            _databaseContext = databaseContext;
-            _configuration = configuration;
-            _mapper = mapper;
-        }
+                {
+                    _databaseContext = databaseContext;
+                    _configuration = configuration;
+                    _mapper = mapper;
+                }
 
-        public List<BookSearchModel> GetBooks()
-        {
-            List<BookSearchModel> book = _databaseContext.Books.ToList().Select(x => _mapper.Map<BookSearchModel>(x)).ToList();
-
-            return book;
-
-        }
         public IActionResult Index()
         {
-           List<BookSearchModel> model=GetBooks();
+            List<BookSearchModel> model = GetBooks();
 
             return View(model);
         }
 
-       
+        
+
+        //public List<BookSearchModel> GetBooks()
+        //{
+        //    List<BookSearchModel> mod = _databaseContext.Books.ToList().Select(x => _mapper.Map<BookSearchModel>(x)).ToList();
+
+        //    return mod;
+
+        //}
+        //
+
+        public List<BookSearchModel> GetBooks()
+        {
+            List<BookSearchModel> mod = new List<BookSearchModel> 
+            { 
+                new BookSearchModel {BookId = Guid.NewGuid(),BookName="Onur1",Author="Onur Doğan1",BookImageFileName=""}, 
+                new BookSearchModel {BookId = Guid.NewGuid(),BookName="Onur2",Author="Onur Doğan2",BookImageFileName=""}, 
+                new BookSearchModel {BookId = Guid.NewGuid(),BookName="Onur3",Author="Onur Doğan3",BookImageFileName=""}, 
+                new BookSearchModel {BookId = Guid.NewGuid(),BookName="Onur4",Author="Onur Doğan4",BookImageFileName=""}, 
+                new BookSearchModel {BookId = Guid.NewGuid(),BookName="Onur5",Author="Onur Doğan5",BookImageFileName=""}, 
+            };
+            return mod;
+        }
        
         public PartialViewResult SearchBooks(string searchText)
         {

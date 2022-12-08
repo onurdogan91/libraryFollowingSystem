@@ -1,7 +1,5 @@
 ﻿@model List<BookSearchModel>
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+
 @{
 }
 <div class="col"> 
@@ -18,7 +16,7 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td><img width="128px" src=~/uploads/@item.BookImageFileName /></td>
+                    @*<td><img width="128px" src=~/uploads/@item.BookImageFileName /></td>*@
                     <td>@item.BookName</td>
                     <td>@item.Author</td>
                     <td></td>

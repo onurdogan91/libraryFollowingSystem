@@ -11,18 +11,25 @@
     <p>Çevrimiçi Kütüphanemizi Kullanarak Aradığınız Kitaplara Kolayca Ulaşabilirsiniz.</p>
 </div>
 
+
+
 <div class="row">
     <div class="col">
         <p>İstediğiniz kitapları aratabilir ve müsaitlik durumuna göre kitaba sahip olabilirsiniz</p>
     </div>
 </div>
+
+
+
 <div class="row">
     <div class="col">
         <input class="form-control me-2" type="text" id="txtSearch" /> 
     </div>
     <div id="grdBooks"></div>
+
+    
 </div>
-<script src="~/lib/jquery-ajaxy/scripts/jquery.ajaxy.min.js"></script>
+
 <script>
     $(() => {
         getBooks();
@@ -33,11 +40,11 @@
     });
 
     function getBooks(){
-        $.ajax({
-            url:'@Url.Action("SearchBooks","Home")',
+        $.ajax.({
+            url: '@Url.Action("SearchBooks","Home")',
             datatype: 'html',
             method: 'GET',
-            data: {searchText: $('#txtSearch').val() },
+            data: { searchText: $('#txtSearch').val() },
             success: function(res){
                 $('#grdBooks').html('').html(res);
             },
@@ -46,5 +53,5 @@
             }
 
         })
-    }
+    }  
 </script>
