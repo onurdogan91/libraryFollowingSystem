@@ -28,18 +28,31 @@ namespace booklib.Controllers
 
         public async Task<IActionResult> Index(string SearchString)
         {
-            //ViewData["CurrentFilter"] = SearchString;
-
-            var books = _databaseContext.Books.ToList()
-                .Select(x => _mapper.Map<BookSearchModel>(x)).Where(x => x.BookName.ToLower() == SearchString).ToList();
-
+            List<BookSearchModel> EmptyBooks = new List<BookSearchModel>();
+            if (!string.IsNullOrEmpty(SearchString)) { 
+                //string sSearch = SearchString.ToLower();
+                            
+                            //ViewData["CurrentFilter"] = SearchString;
+                            try { 
+                            var books = _databaseContext.Books.ToList()
+                                .Select(x => _mapper.Map<BookSearchModel>(x)).Where(x => x.BookName.ToLower().Contains(SearchString.ToLower())).ToList();
+                                return View(books);
+                            }
+                            catch(Exception e)
+                            {
+                                Console.WriteLine(e.Message);
+                            }
+            }
+            
+            return View(EmptyBooks);
+            
             //var books = from b in _databaseContext.Books select b;
             //if (!String.IsNullOrEmpty(SearchString))
             //{
             //    books = books.Where(b => b.BookName.Contains(SearchString) || b.Author.Contains(SearchString));
             //}
 
-            return View(books);
+            
         }       
 
               
