@@ -18,51 +18,31 @@ namespace booklib.Controllers
         private readonly DatabaseContext _databaseContext;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
-        public HomeController(DatabaseContext databaseContext, IConfiguration configuration, IMapper mapper)
+
+               public HomeController(DatabaseContext databaseContext, IConfiguration configuration, IMapper mapper)
                 {
                     _databaseContext = databaseContext;
                     _configuration = configuration;
                     _mapper = mapper;
                 }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string SearchString)
         {
-            List<BookSearchModel> model = GetBooks();
+            //ViewData["CurrentFilter"] = SearchString;
 
-            return View(model);
-        }
+            var books = _databaseContext.Books.ToList()
+                .Select(x => _mapper.Map<BookSearchModel>(x)).Where(x => x.BookName.ToLower() == SearchString).ToList();
 
-        
+            //var books = from b in _databaseContext.Books select b;
+            //if (!String.IsNullOrEmpty(SearchString))
+            //{
+            //    books = books.Where(b => b.BookName.Contains(SearchString) || b.Author.Contains(SearchString));
+            //}
 
-        //public List<BookSearchModel> GetBooks()
-        //{
-        //    List<BookSearchModel> mod = _databaseContext.Books.ToList().Select(x => _mapper.Map<BookSearchModel>(x)).ToList();
+            return View(books);
+        }       
 
-        //    return mod;
-
-        //}
-        //
-
-        public List<BookSearchModel> GetBooks()
-        {
-            List<BookSearchModel> mod = new List<BookSearchModel> 
-            { 
-                new BookSearchModel {BookId = Guid.NewGuid(),BookName="Onur1",Author="Onur Doğan1",BookImageFileName=""}, 
-                new BookSearchModel {BookId = Guid.NewGuid(),BookName="Onur2",Author="Onur Doğan2",BookImageFileName=""}, 
-                new BookSearchModel {BookId = Guid.NewGuid(),BookName="Onur3",Author="Onur Doğan3",BookImageFileName=""}, 
-                new BookSearchModel {BookId = Guid.NewGuid(),BookName="Onur4",Author="Onur Doğan4",BookImageFileName=""}, 
-                new BookSearchModel {BookId = Guid.NewGuid(),BookName="Onur5",Author="Onur Doğan5",BookImageFileName=""}, 
-            };
-            return mod;
-        }
-       
-        public PartialViewResult SearchBooks(string searchText)
-        {
-            List<BookSearchModel> model = GetBooks();
-            var result = model.Where(a => a.BookName.ToLower().Contains(searchText) || a.Author.ToLower().Contains(searchText)).ToList();
-            return PartialView("_PartialGridView", result);
-        }
-
+              
         [Authorize(Roles = "user, admin, moderator")]
         public IActionResult Privacy()
         {

@@ -1,4 +1,4 @@
-﻿
+﻿@model List<BookSearchModel>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -22,36 +22,35 @@
 
 
 <div class="row">
+    <form asp-action="Index" method="get">
     <div class="col">
-        <input class="form-control me-2" type="text" id="txtSearch" /> 
+        <input class="form-control me-2" type="text" name="SearchString" value="@ViewData["CurrentFilter"]" /> 
+        <input type="submit" value="Search" class="btn btn-primary" />
     </div>
+    </form>
     <div id="grdBooks"></div>
-
+    <div class="col">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Kitap Kapağı</th>
+                    <th>Kitap Adı</th>
+                    <th>Yazar</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><img width="128px" src=~/uploads/@item.BookImageFileName /></td>
+                        <td>@item.BookName</td>
+                        <td>@item.Author</td>
+                        <td></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
     
 </div>
-
-<script>
-    $(() => {
-        getBooks();
-
-        $('#txtSearch').on('keyup', () => {
-            getBooks();
-        });
-    });
-
-    function getBooks(){
-        $.ajax.({
-            url: '@Url.Action("SearchBooks","Home")',
-            datatype: 'html',
-            method: 'GET',
-            data: { searchText: $('#txtSearch').val() },
-            success: function(res){
-                $('#grdBooks').html('').html(res);
-            },
-            error: function(err){
-                console.log(err);
-            }
-
-        })
-    }  
-</script>
