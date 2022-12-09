@@ -46,7 +46,7 @@
                         <td><img width="128px" src=~/uploads/@item.BookImageFileName /></td>
                         <td>@item.BookName</td>
                         <td>@item.Author</td>
-                        <td></td>
+                        <td><a asp-action="BookDetails" asp-route-id="@item.BookId" class="btn btn-info btn-sm text-white"><i class="fa fa-edit me-2"></i>Detay</a></td>
                     </tr>
                 }
             </tbody>

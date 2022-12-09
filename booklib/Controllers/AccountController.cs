@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 
 namespace booklib.Controllers
 {
@@ -13,12 +15,13 @@ namespace booklib.Controllers
     {
         private readonly DatabaseContext _databaseContext;
         private readonly IConfiguration _configuration;
+        private readonly IMapper _mapper;
 
-
-        public AccountController(DatabaseContext databaseContext, IConfiguration configuration)
+        public AccountController(DatabaseContext databaseContext, IConfiguration configuration, IMapper mapper)
         {
             _databaseContext = databaseContext;
             _configuration = configuration;
+            _mapper = mapper;
         }
         
         public IActionResult Register()
@@ -118,6 +121,65 @@ namespace booklib.Controllers
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction(nameof(Login));
-        }        
+        }
+
+        public IActionResult BookListed()
+        {
+            List<BookModel> books =
+                _databaseContext.Books.ToList().Select(x => _mapper.Map<BookModel>(x)).ToList();
+            return View(books);
+
+        }
+
+        public IActionResult BorrowBook(Guid id)
+        {
+            Book book = _databaseContext.Books.Find(id);
+            ClaimsPrincipal principal = HttpContext.User;
+            Guid userId = new Guid(principal.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            User user = _databaseContext.Users.Find(userId);
+
+
+            Lib entity = new Lib();
+            entity.Book = book;
+            entity.User = user;
+            entity.UserName = user.UserName;
+            entity.BookName = book.BookName;
+            entity.Book.Stock = book.Stock - 1;
+
+
+
+            //List<LibViewModel> libs =
+            //    _databaseContext.Libs.ToList().Select(x => _mapper.Map<LibViewModel>(x)).xToList();
+
+            //var username = entity.User.UserName;
+            //var bookname = entity.Book.BookName;
+
+            _databaseContext.Add(entity);
+
+
+            _databaseContext.SaveChanges();
+
+
+            return RedirectToAction(nameof(BookListed));
+
+        }
+
+        public IActionResult ListBook()
+        {
+            ClaimsPrincipal principal = HttpContext.User;
+            var userid = new Guid(principal.FindFirst(ClaimTypes.NameIdentifier).Value).ToString();
+
+            ViewBag.userid = userid;
+
+
+            List<LibViewModel> libs =
+                 _databaseContext.Libs.ToList().Select(x => _mapper.Map<LibViewModel>(x)).ToList();
+
+            return View(libs);
+
+
+        }
+
     }
 }

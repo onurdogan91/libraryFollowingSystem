@@ -51,6 +51,22 @@ namespace booklib.Models
         public string BookImageFileName { get; set; }
 
         public DateTime PublishingDate { get; set; }
-    }   
+    }
+
+    public class BorrowBookModel
+    {
+
+        public Guid UserName { get; set; }
+        public string BookName { get; set; }
+
+        public string BookType { get; set; }
+
+        public string BookSubject { get; set; }
+
+        public string Author { get; set; }
+        public DateTime GivenDate { get; set; } = DateTime.Now;
+        public DateTime ReturnDate { get; set; } = DateTime.Now.AddDays(15);
+
+    }
 
 }
