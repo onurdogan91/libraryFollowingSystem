@@ -25,10 +25,6 @@
                     <th scope="col">Kitap Kapağı</th>
                     <th scope="col">Kitap Adı</th>
                     <th scope="col">Yazarı</th>
-                   @* <th scope="col">Türü</th>
-                    <th scope="col">Yayım Tarihi</th>
-                    <th scope="col">Özet</th>
-                    <th scope="col">Stok</th>*@
                     <th scope="col">Detay</th>
                    
                 </tr>
@@ -41,10 +37,6 @@
                         <td><img width="128px" src=~/uploads/@book.BookImageFileName /></td>
                         <td>@book.BookName</td>
                         <td>@book.Author</td>
-                        @*<td>@book.BookType</td>
-                        <td>@book.PublishingDate</td>                        
-                        <td>@book.BookSubject</td>
-                        <td>@book.Stock</td>*@
                         <td>
                             <a asp-action="BookDetails" asp-route-id="@book.BookId" class="btn btn-info btn-sm text-white"><i class="fa fa-edit me-2"></i>Detay</a>
                         </td>

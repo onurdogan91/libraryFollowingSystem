@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using static System.Reflection.Metadata.BlobBuilder;
 
 namespace booklib.Controllers
@@ -29,14 +30,14 @@ namespace booklib.Controllers
         public async Task<IActionResult> Index(string SearchString)
         {
             List<BookSearchModel> EmptyBooks = new List<BookSearchModel>();
-            if (!string.IsNullOrEmpty(SearchString)) { 
-                //string sSearch = SearchString.ToLower();
-                            
-                            //ViewData["CurrentFilter"] = SearchString;
+            if (!string.IsNullOrEmpty(SearchString)) 
+            {                 
                             try { 
                             var books = _databaseContext.Books.ToList()
                                 .Select(x => _mapper.Map<BookSearchModel>(x)).Where(x => x.BookName.ToLower().Contains(SearchString.ToLower())).ToList();
                                 return View(books);
+                                
+
                             }
                             catch(Exception e)
                             {
@@ -44,18 +45,43 @@ namespace booklib.Controllers
                             }
             }
             
-            return View(EmptyBooks);
-            
-            //var books = from b in _databaseContext.Books select b;
-            //if (!String.IsNullOrEmpty(SearchString))
-            //{
-            //    books = books.Where(b => b.BookName.Contains(SearchString) || b.Author.Contains(SearchString));
-            //}
 
-            
-        }       
+            return View(EmptyBooks);          
+        }
+        public IActionResult BorrowBook(Guid id)
+        {
+            Book book = _databaseContext.Books.Find(id);
+            ClaimsPrincipal principal = HttpContext.User;
+            Guid userId = new Guid(principal.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-              
+            User user = _databaseContext.Users.Find(userId);
+
+
+            Lib entity = new Lib();
+            entity.Book = book;
+            entity.User = user;
+            entity.UserName = user.UserName;
+            entity.BookName = book.BookName;
+            entity.Book.Stock = book.Stock - 1;
+
+
+
+            //List<LibViewModel> libs =
+            //    _databaseContext.Libs.ToList().Select(x => _mapper.Map<LibViewModel>(x)).xToList();
+
+            //var username = entity.User.UserName;
+            //var bookname = entity.Book.BookName;
+
+            _databaseContext.Add(entity);
+
+
+            _databaseContext.SaveChanges();
+
+
+            return RedirectToAction(nameof(Index));
+
+        }
+
         [Authorize(Roles = "user, admin, moderator")]
         public IActionResult Privacy()
         {

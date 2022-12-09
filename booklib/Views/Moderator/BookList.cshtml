@@ -3,7 +3,6 @@
     ViewData["Title"] = "Kitap Düzenle";
 }
 
-
 <div class="row">
     <div class="col-14">
         <h1 class="display-4 border-bottom text-center pb-2">@ViewData["Title"]</h1>
@@ -28,15 +27,15 @@
             </thead>
             
             <tbody>
-                @foreach(BookModel book in Model){
-                <tr>
+                @foreach(BookModel book in Model)
+                {
+                    <tr>
                         <td><img width="128px" src=~/uploads/@book.BookImageFileName/></td>
                         <td>@book.BookName</td>
                         <td>@book.Author</td>
                         <td>@book.BookType</td>
                         <td>@book.PublishingDate</td>
-                        <td height="200px"><textarea class="text-box" style="height:200px;" row="3" >@book.BookSubject</textarea></td>
-                        @*<td>@book.BookSubject</td>*@
+                        <td height="200px"><textarea class="text-box" style="height:200px;" row="3" >@book.BookSubject</textarea></td>                        
                         <td>@book.Stock</td>
                         <td>
                             <a asp-action="EditBook" asp-route-id="@book.BookId" class="btn btn-info btn-sm text-white"><i class="fa fa-edit me-2"></i>Edit</a>
@@ -46,7 +45,7 @@
                                  onclick="return confirm('Bu kitabı silmek istediğinizden emin misiniz? : @book.BookName ?')"
                                  class="btn btn-danger btn-sm"><i class="fa fa-trash me-2"></i>Remove</a>
                         </td>
-                </tr>                
+                    </tr>                
                 }
             </tbody>
         </table>
